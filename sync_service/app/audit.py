@@ -1,4 +1,6 @@
-audit_log = []
+events = []
 
-def log_event(event):
-    audit_log.append(event)
+def log_event(event: dict):
+    events.append(event)
+
+

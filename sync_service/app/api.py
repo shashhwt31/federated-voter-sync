@@ -1,17 +1,23 @@
 from fastapi import APIRouter
-from app.matcher import match_event
-from app.audit import log_event
+from app.audit import events, log_event
+from app.matcher import process_event, matches
 
 router = APIRouter()
 
 @router.post("/events")
 def receive_event(event: dict):
     log_event(event)
-    matches = match_event(event)
-    return {
-        "matches": matches
-    }
+    process_event(event)
+    return {"status": "event processed"}
 
 @router.get("/audit")
-def audit():
-    return {"events": log_event}
+def get_audit():
+    return {
+        "events": events
+    }
+
+@router.get("/matches")
+def get_matches():
+    return {
+        "duplicates_detected": matches
+    }
