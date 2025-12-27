@@ -1,13 +1,15 @@
-
-
 services:
   sync:
-    build: ./sync_service
+    build:
+      context: .
+      dockerfile: sync_service/Dockerfile
     ports:
       - "9000:9000"
 
   state_a:
-    build: ./state_service
+    build:
+      context: .
+      dockerfile: state_service/Dockerfile
     environment:
       - STATE_CODE=NY
       - STATE_SALT=ny_secret
@@ -16,10 +18,15 @@ services:
       - "8001:8000"
 
   state_b:
-    build: ./state_service
+    build:
+      context: .
+      dockerfile: state_service/Dockerfile
     environment:
       - STATE_CODE=CA
       - STATE_SALT=ca_secret
       - SYNC_URL=http://sync:9000
     ports:
       - "8002:8000"
+
+
+
