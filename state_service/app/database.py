@@ -1,0 +1,2 @@
+voters = {}
+notifications = []

@@ -1,0 +1,25 @@
+version: "3.9"
+
+services:
+  sync:
+    build: ./sync_service
+    ports:
+      - "9000:9000"
+
+  state_a:
+    build: ./state_service
+    environment:
+      - STATE_CODE=NY
+      - STATE_SALT=ny_secret
+      - SYNC_URL=http://sync:9000
+    ports:
+      - "8001:8000"
+
+  state_b:
+    build: ./state_service
+    environment:
+      - STATE_CODE=CA
+      - STATE_SALT=ca_secret
+      - SYNC_URL=http://sync:9000
+    ports:
+      - "8002:8000"
