@@ -1,5 +1,7 @@
 from fastapi import FastAPI
-from app.api import router
 
-app = FastAPI(title="Voter Sync Service")
-app.include_router(router)
+app = FastAPI(title="Sync Service")
+
+@app.get("/health")
+def health():
+    return {"status": "ok"}
